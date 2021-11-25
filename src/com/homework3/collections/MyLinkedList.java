@@ -297,7 +297,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
 
     @Override
     public Iterator<E> iterator () {
-    Iterator<E> it = new Iterator<E>() {
+    Iterator<E> iterator = new Iterator<E>() {
 
         Node<E> current = first;
         int index = 0;
@@ -314,12 +314,9 @@ public class MyLinkedList<E> implements ILinkedList<E> {
             index++;
             return elem;
         }
-
-
-
     };
 
-        return it;
+        return iterator;
 }
 
     @Override
