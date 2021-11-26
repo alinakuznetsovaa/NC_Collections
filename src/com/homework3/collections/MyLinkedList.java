@@ -52,7 +52,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     private int size;
 
     public void add (E element){
-        if (isEmpty()) {
+        if (size == 0) {
             last = new Node<>(element);
             first = last;
 
@@ -77,7 +77,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
         if(index < 0 || index > size)
             System.out.println("Index out of range");
 
-        if ( isEmpty() || size == 1 || size == index )
+        if ( size == 0 || size == 1 || size == index )
             add(element);
         else {
             if(index == 0)
@@ -148,7 +148,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     @Override
     public int indexOf(E element) {
         Node<E> tmp = first;
-        for(int i = 0; i < getSize(); i++) {
+        for(int i = 0; i < size; i++) {
             if(element.equals(tmp.getElement()))
                 return i;
             else
@@ -163,12 +163,12 @@ public class MyLinkedList<E> implements ILinkedList<E> {
         if (index < 0 || index > size)
             System.out.println("Index out of range");
 
-        if (getSize() == 0)
+        if (size == 0)
             System.out.println("List is empty");
 
         E result;
 
-        if(getSize() == 1)
+        if(size == 1)
         {
             result = last.getElement();
             first = null;
@@ -189,7 +189,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
 
             } else {
 
-                if (index == getSize() - 1) {
+                if (index == size - 1) {
                     Node<E> tmp = last.getPrevNode();
                     result = last.getElement();
                     tmp.setNextNode(null);
@@ -247,9 +247,10 @@ public class MyLinkedList<E> implements ILinkedList<E> {
             return tmp.getElement();
     }
 
-        @Override
-        public int size () {
-            return getSize();
+
+         @Override
+         public int size(){
+             return size;
         }
 
         @Override
@@ -285,15 +286,10 @@ public class MyLinkedList<E> implements ILinkedList<E> {
 
         }
 
-        public int getSize () {
-            return size;
-        }
 
 
-        public boolean isEmpty() {
 
-            return size == 0;
-        }
+
 
     @Override
     public Iterator<E> iterator () {
@@ -322,7 +318,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     @Override
     public String toString() {
         String str = "My List is:  ";
-        for(int i = 0; i < getSize(); i++) {
+        for(int i = 0; i < size; i++) {
             str += get(i);
             str += "  ";
         }
