@@ -7,34 +7,34 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class PerformanceLists {
-    public static void myListAdd(int n){
-        MyLinkedList<Integer> myList = new MyLinkedList<>();
+    public static void myLinkedListAdd(int n){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
         Random r = new Random();
         long start = System.nanoTime();
         for(int i = 0; i < n; i++)
         {
-            myList.add(r.nextInt(n));
+            myLinkedList.add(r.nextInt(n));
 
         }
         long finish = System.nanoTime();
 
-        System.out.println("My list add "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("My Linked List add "+ n + " elemens: " + (finish - start) + " nsec");
 
 
     }
 
-    public static void javaListAdd(int n){
+    public static void linkedListAdd(int n){
 
-        LinkedList<Integer> javaList = new LinkedList<>();
+        LinkedList<Integer> linkedList = new LinkedList<>();
         Random r = new Random();
         long start = System.nanoTime();
         for(int i = 0; i < n; i++)
         {
-            javaList.add(r.nextInt(n));
+            linkedList.add(r.nextInt(n));
 
         }
         long finish = System.nanoTime();
-        System.out.println("Java List add " + n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("Linked List add " + n + " elemens: " + (finish - start) + " nsec");
 
 
     }
@@ -52,40 +52,40 @@ public class PerformanceLists {
         System.out.println("Array List add " + n + " elements: " + (finish - start) + " nsec");
     }
 
-    public static void myListRemove(int n,int size){
-        MyLinkedList<Integer> myList = new MyLinkedList<>();
+    public static void myLinkedListRemove(int n, int size){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
         Random r = new Random();
 
 
         for(int i = 0; i < size; i++){
-            myList.add(i);
+            myLinkedList.add(i);
         }
 
         long start = System.nanoTime();
         for(int i = 0; i < n; i++){
-            myList.remove(r.nextInt(n));
+            myLinkedList.remove(r.nextInt(n));
         }
         long finish = System.nanoTime();
-        System.out.println("My list remove "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("My Linked List remove "+ n + " elemens: " + (finish - start) + " nsec");
 
     }
 
-    public static void javaListRemove(int n, int size){
-        LinkedList<Integer> javaList = new LinkedList<>();
+    public static void linkedListRemove(int n, int size){
+        LinkedList<Integer> linkedList = new LinkedList<>();
         Random r = new Random();
 
         for(int i = 0; i < size; i++){
-            javaList.add(i);
+            linkedList.add(i);
         }
         long start = System.nanoTime();
         for(int i = 0; i < n; i++){
-            javaList.remove(r.nextInt(n));
+            linkedList.remove(r.nextInt(n));
         }
         long finish = System.nanoTime();
-        System.out.println("Java list remove "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("Linked List remove "+ n + " elemens: " + (finish - start) + " nsec");
     }
 
-    public static void javaArrayListRemove(int n, int size){
+    public static void arrayListRemove(int n, int size){
         ArrayList<Integer> arrayList = new ArrayList<>();
         Random r = new Random();
 
@@ -98,55 +98,55 @@ public class PerformanceLists {
             arrayList.remove(r.nextInt(n));
         }
         long finish = System.nanoTime();
-        System.out.println("Java Array list remove "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("Array List remove "+ n + " elemens: " + (finish - start) + " nsec");
     }
 
-    public static void javaListGet(int n, int size){
-        LinkedList<Integer> javaList = new LinkedList<>();
+    public static void linkedListGet(int n, int size){
+        LinkedList<Integer> linkedList = new LinkedList<>();
         Random r = new Random();
 
         for(int i = 0; i < size; i++){
-            javaList.add(i);
+            linkedList.add(i);
         }
 
         long start = System.nanoTime();
         for (int i = 0; i < n; i++) {
-            javaList.get(r.nextInt(n));
+            linkedList.get(r.nextInt(n));
         }
         long finish = System.nanoTime();
-        System.out.println("Java list get "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("Linked List get "+ n + " elemens: " + (finish - start) + " nsec");
     }
 
-    public static void myListGet(int n, int size){
-        MyLinkedList<Integer> myList = new MyLinkedList<>();
+    public static void myLinkedListGet(int n, int size){
+        MyLinkedList<Integer> myLinkedList = new MyLinkedList<>();
         Random r = new Random();
 
         for(int i = 0; i < size; i++){
-            myList.add(i);
+            myLinkedList.add(i);
         }
 
         long start = System.nanoTime();
         for (int i = 0; i < n; i++) {
-            myList.get(r.nextInt(n));
+            myLinkedList.get(r.nextInt(n));
         }
         long finish = System.nanoTime();
-        System.out.println("My list get "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("My Linked List get "+ n + " elemens: " + (finish - start) + " nsec");
     }
 
-    public static void javaArrayListGet(int n, int size){
-        ArrayList<Integer> javaArr = new ArrayList<>();
+    public static void arrayListGet(int n, int size){
+        ArrayList<Integer> arrayList = new ArrayList<>();
         Random r = new Random();
         for(int i = 0; i < size; i++){
-            javaArr.add(i);
+            arrayList.add(i);
         }
 
         long start = System.nanoTime();
         for (int i = 0; i < n; i++) {
-            javaArr.get(r.nextInt(n));
+            arrayList.get(r.nextInt(n));
         }
         long finish = System.nanoTime();
 
-        System.out.println("Java Array list get "+ n + " elemens: " + (finish - start) + " nsec");
+        System.out.println("Array list get "+ n + " elemens: " + (finish - start) + " nsec");
     }
 
 

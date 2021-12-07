@@ -24,7 +24,7 @@ public class TestMyLinkedList {
         list.add(2,66);
         System.out.println(list);
 
-        System.out.println(list.getSize());
+
 
         System.out.println(list.get(0));
         System.out.println(list.get(6));
@@ -45,7 +45,7 @@ public class TestMyLinkedList {
 
         list.set(0,9);
         list.set(5,9);
-        list.set(9,9);
+        list.set(8,9);
         System.out.println(list);
 
         list.clear();

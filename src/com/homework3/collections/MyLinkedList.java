@@ -51,21 +51,31 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     private Node<E> last;
     private int size;
 
+    private Node<E> getNodeByIndex(int index){
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        if(index <= size/2) {
+            Node<E> tmp = first;
+            for(int i = 0; i< index; i++){
+                tmp = tmp.getNextNode();}
+            return tmp;
+        } else {
+            Node<E> tmp = last;
+            for (int i = size - 1; i > index; i--) {
+                tmp = tmp.getPrevNode();
+            }
+            return tmp;
+        }
+
+    }
     public void add (E element){
         if (size == 0) {
             last = new Node<>(element);
             first = last;
 
-        } else if (size == 1) {
-            last = new Node<>(element);
-            first.setNextNode(last);
-            last.setPrevNode(first);
-
         } else {
-            Node<E> node = new Node<>(element);
-            last.setNextNode(node);
-            node.setPrevNode(last);
-            last = node;
+            last.nextNode = new Node<>(element,null,last);
+            last=last.nextNode;
         }
         size++;
     }
@@ -75,74 +85,53 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     @Override
     public void add(int index, E element) {
         if(index < 0 || index > size)
-            System.out.println("Index out of range");
+            throw new IndexOutOfBoundsException();
 
-        if ( size == 0 || size == 1 || size == index )
+        if ( size == 0 || size == 1 || size == index ) {
             add(element);
-        else {
-            if(index == 0)
+            return;
+        }
+
+        if(index == 0)
             {
                 Node<E> node = new Node<>(element);
                 node.setNextNode(first);
                 first.setPrevNode(node);
                 first = node;
-
-            } else {
-                if(index <= size/2)
-                {
-                Node<E> tmp = first;
-                for(int i = 0; i< index; i++) {
-                    tmp = tmp.getNextNode();
-                }
-                Node<E> node = new Node<>(element,tmp,tmp.getPrevNode());
-                    tmp.getPrevNode().setNextNode(node);
-
-                    tmp.setPrevNode(node);
-                } else {
-                    Node<E> tmp = last;
-                    for(int i = size - 1; i > index; i--) {
-                        tmp = tmp.getPrevNode();
-                    }
-                    Node<E> node = new Node<>(element,tmp,tmp.getPrevNode());
-                    tmp.getPrevNode().setNextNode(node);
-
-                    tmp.setPrevNode(node);
-
-                }
+                size++;
+                return;
 
             }
-            size++;
+
+                Node<E> tmp = getNodeByIndex(index);
+                Node<E> node = new Node<>(element,tmp,tmp.prevNode);
+                tmp.prevNode.setNextNode(node);
+                tmp.setPrevNode(node);
+                size++;
         }
 
 
-    }
+
 
 
     @Override
     public void clear() {
-        first = null;
-        last = null;
+        Node<E> tmp = first;
+        for(int i = 0; i< size-1; i++) {
+            Node<E> next = tmp.nextNode;
+            tmp.element=null;
+            tmp.nextNode=null;
+            tmp.prevNode=null;
+
+        }
+        first = last = null;
         size = 0;
 
     }
 
     @Override
     public E get(int index) {
-        Node<E> tmp;
-        if(index <= size/2) {
-            tmp = first;
-            for (int i = 0; i < index; i++) {
-                tmp = tmp.getNextNode();
-            }
-        } else {
-            tmp = last;
-            for(int i = size - 1; i > index; i--) {
-                tmp = tmp.getPrevNode();
-            }
-
-        }
-
-        return tmp.getElement();
+        return getNodeByIndex(index).element;
     }
 
     @Override
@@ -160,90 +149,44 @@ public class MyLinkedList<E> implements ILinkedList<E> {
     @Override
     public E remove(int index) {
 
-        if (index < 0 || index > size)
-            System.out.println("Index out of range");
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
 
-        if (size == 0)
-            System.out.println("List is empty");
-
-        E result;
+        E result = get(index);
 
         if(size == 1)
         {
-            result = last.getElement();
-            first = null;
-            last = null;
-
-
-
-        } else {
-
-            if (index == 0){
-
-                Node<E> tmp = first.getNextNode();
-                result = first.getElement();
-                tmp.setPrevNode(null);
-                first.setNextNode(null);
-                first = tmp;
-
-
-            } else {
-
-                if (index == size - 1) {
-                    Node<E> tmp = last.getPrevNode();
-                    result = last.getElement();
-                    tmp.setNextNode(null);
-                    last.setPrevNode(null);
-                    last = tmp;
-
-                } else {
-                    if(index <= size/2) {
-                        Node<E> tmp = first;
-                        for (int i = 0; i < index; i++) {
-                            tmp = tmp.getNextNode();
-                        }
-                        result = tmp.getElement();
-                        tmp.getPrevNode().setNextNode(tmp.getNextNode());
-                        tmp.getNextNode().setPrevNode(tmp.getPrevNode());
-                    } else {
-                        Node<E> tmp = last;
-                        for(int i = size - 1; i > index; i--) {
-                            tmp = tmp.getPrevNode();
-                        }
-                        result = tmp.getElement();
-                        tmp.getPrevNode().setNextNode(tmp.getNextNode());
-                        tmp.getNextNode().setPrevNode(tmp.getPrevNode());
-
-                    }
-                }
-            }
+            this.clear();
 
         }
 
+        if (index == 0){
+            first = first.nextNode;
+            first.prevNode = null;
+            size--;
+            return result;
+            }
+
+        if (index == size - 1) {
+
+            last = last.prevNode;
+            last.nextNode=null;
+            size--;
+            return result;
+        }
+
+        Node<E> tmp = getNodeByIndex(index);
+        tmp.prevNode.setNextNode(tmp.nextNode);
+        tmp.nextNode.setPrevNode(tmp.prevNode);
         size--;
         return result;
     }
 
         @Override
         public E set ( int index, E element){
-            if (index < 0 || index > size)
-                System.out.println("Index out of range");
-            Node<E> tmp;
-            if(index <= size/2) {
-                tmp = first;
-                for (int i = 0; i < index; i++) {
-                    tmp = tmp.getNextNode();
-                }
-            } else{
-                tmp = last;
-                for(int i = size - 1; i > index; i--) {
-                    tmp = tmp.getPrevNode();
-                }
 
-            }
-
+            Node<E> tmp=getNodeByIndex(index);
             tmp.setElement(element);
-
             return tmp.getElement();
     }
 
@@ -267,7 +210,7 @@ public class MyLinkedList<E> implements ILinkedList<E> {
         }
 
         @Override
-        public <T > T[]toArray(T[]t){
+        public <T> T[]toArray(T[]t){
             if (t.length < size)
                 t = (T[]) newInstance(t.getClass().getComponentType(), size);
 
